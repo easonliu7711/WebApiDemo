@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebApiDemo.Controllers.Requests;
@@ -28,5 +29,9 @@ public class CreateDeviceRequest
     [Required(ErrorMessage = "設備標籤不能為空")]
     [StringLength(200, ErrorMessage = "設備標籤不能超過100個字符")]
     public string Label { get; set; }
-    
+
+    public override string ToString()
+    {
+        return JsonConvert.SerializeObject(this);
+    }
 }

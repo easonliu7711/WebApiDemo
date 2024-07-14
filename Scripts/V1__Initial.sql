@@ -46,6 +46,6 @@ CREATE TABLE asp_demo.device_info
     type         VARCHAR(50)  NOT NULL,
     name         VARCHAR(100) NOT NULL,
     label        VARCHAR(200) NOT NULL,
-    create_time  timestamp without time zone,
-    update_time  timestamp without time zone
+    create_time  timestamp with time zone,
+    update_time  timestamp with time zone
 );

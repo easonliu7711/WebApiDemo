@@ -22,8 +22,8 @@ public class DeviceDto
         Type = entity.Type;
         AccessToken = entity.AccessToken;
         Label = entity.Label;
-        CreateTime = entity.CreateTime;
-        UpdateTime = entity.UpdateTime;
+        CreateTime = entity.CreateTime.ToLocalTime();
+        UpdateTime = entity.UpdateTime.ToLocalTime();
     }
 
     public string Id { get; set; }
@@ -35,11 +35,13 @@ public class DeviceDto
     public string AccessToken { get; set; }
 
     public string Label { get; set; }
-    
+
     public DateTime CreateTime { get; set; }
-    
+
     public DateTime UpdateTime { get; set; }
-    
-    public override string ToString() => JsonConvert.SerializeObject(this);
-    
+
+    public override string ToString()
+    {
+        return JsonConvert.SerializeObject(this);
+    }
 }

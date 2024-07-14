@@ -6,7 +6,7 @@ using WebApiDemo.Services.Dtos;
 namespace WebApiDemo.Data.Entities;
 
 [Table("device_info", Schema = "asp_demo")]
-public class DeviceEntity: AuditableEntity
+public class DeviceEntity : AuditableEntity
 {
     public DeviceEntity()
     {
@@ -45,6 +45,9 @@ public class DeviceEntity: AuditableEntity
     [StringLength(200)]
     [Required]
     public string Label { get; set; }
-    
-    public override string ToString() => JsonConvert.SerializeObject(this);
+
+    public override string ToString()
+    {
+        return JsonConvert.SerializeObject(this);
+    }
 }

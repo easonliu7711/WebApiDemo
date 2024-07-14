@@ -6,7 +6,7 @@ namespace WebApiDemo.Data;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<DeviceEntity> DeviceInfo { get; set; }
-    
+
     public override int SaveChanges()
     {
         OnBeforeSaving();
@@ -22,15 +22,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     private void OnBeforeSaving()
     {
         var entries = ChangeTracker.Entries()
-            .Where(e => e.Entity is AuditableEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+            .Where(e => e.Entity is AuditableEntity &&
+                        (e.State == EntityState.Added || e.State == EntityState.Modified));
 
         foreach (var entityEntry in entries)
         {
             if (entityEntry.State == EntityState.Added)
-            {
                 ((AuditableEntity)entityEntry.Entity).CreateTime = DateTime.UtcNow;
-            }
-            
             ((AuditableEntity)entityEntry.Entity).UpdateTime = DateTime.UtcNow;
         }
     }
