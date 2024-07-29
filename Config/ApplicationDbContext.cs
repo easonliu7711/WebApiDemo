@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApiDemo.Data.Entities;
 
-namespace WebApiDemo.Data;
+namespace WebApiDemo.Config;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {

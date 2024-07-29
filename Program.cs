@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using WebApiDemo.Config;
-using WebApiDemo.Data;
 using WebApiDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,10 +22,10 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations();
 });
 
-var app = builder.Build();
-
 // Run Evolve migrations
-RunEvolveMigrations(app.Services);
+EvolveConfig.RunEvolveMigrations(builder.Configuration);
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -47,19 +46,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-void RunEvolveMigrations(IServiceProvider serviceProvider)
-{
-    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-    var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-    var evolveConfig = configuration.GetSection("Evolve").Get<EvolveConfig>();
-    if (evolveConfig == null) return;
-    using var connection = new NpgsqlConnection(connectionString);
-    var evolve = new Evolve(connection, Console.WriteLine)
-    {
-        Locations = evolveConfig.Locations,
-        Schemas = evolveConfig.Schemas
-    };
-    evolve.Migrate();
-}
