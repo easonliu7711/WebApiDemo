@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using DbUp;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using WebApiDemo.Data;
 using WebApiDemo.Services;
@@ -22,6 +24,9 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Run database migrations
+RunDatabaseMigrations(app.Services);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -41,3 +46,31 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void RunDatabaseMigrations(IServiceProvider serviceProvider)
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+    var upgrader =
+        DeployChanges.To
+            .PostgresqlDatabase(connectionString)
+            .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+            .JournalToPostgresqlTable("public", "schemaversions")
+            .LogToConsole()
+            .Build();
+
+    var result = upgrader.PerformUpgrade();
+
+    if (!result.Successful)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(result.Error);
+        Console.ResetColor();
+        throw new Exception("Database migration failed", result.Error);
+    }
+
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("Database migration succeeded!");
+    Console.ResetColor();
+}

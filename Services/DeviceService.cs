@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiDemo.Data;
 using WebApiDemo.Data.Entities;
-using WebApiDemo.Services.Dtos;
+using WebApiDemo.Services.Dto;
 
 namespace WebApiDemo.Services;
 
@@ -16,6 +16,14 @@ public class DeviceService(ApplicationDbContext context) : IDeviceService
     {
         var entities = dtoList.Select(dto => new DeviceEntity(dto)).ToList();
         context.DeviceInfo.AddRange(entities);
+        context.SaveChanges();
+        return new OkResult();
+    }
+
+    public IActionResult UpdateDevices(List<DeviceDto> dtoList)
+    {
+        var entities = dtoList.Select(dto => new DeviceEntity(dto)).ToList();
+        context.DeviceInfo.UpdateRange(entities);
         context.SaveChanges();
         return new OkResult();
     }

@@ -2,7 +2,7 @@
 using WebApiDemo.Controllers.Requests;
 using WebApiDemo.Data.Entities;
 
-namespace WebApiDemo.Services.Dtos;
+namespace WebApiDemo.Services.Dto;
 
 public class DeviceDto
 {
@@ -24,6 +24,15 @@ public class DeviceDto
         Label = entity.Label;
         CreateTime = entity.CreateTime.ToLocalTime();
         UpdateTime = entity.UpdateTime.ToLocalTime();
+    }
+
+    public DeviceDto(UpdateDeviceRequest updateDeviceRequest)
+    {
+        Id = updateDeviceRequest.Id;
+        Name = updateDeviceRequest.Name;
+        Type = updateDeviceRequest.Type;
+        AccessToken = updateDeviceRequest.AccessToken;
+        Label = updateDeviceRequest.Label;
     }
 
     public string Id { get; set; }

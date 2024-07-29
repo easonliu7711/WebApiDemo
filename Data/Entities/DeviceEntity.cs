@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
-using WebApiDemo.Services.Dtos;
+using WebApiDemo.Services.Dto;
 
 namespace WebApiDemo.Data.Entities;
 
-[Table("device_info", Schema = "asp_demo")]
+[Table("device_info", Schema = "public")]
 public class DeviceEntity : AuditableEntity
 {
     public DeviceEntity()

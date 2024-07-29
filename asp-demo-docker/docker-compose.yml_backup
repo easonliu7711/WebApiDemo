@@ -7,7 +7,7 @@ services:
     ports:
       - 15432:5432
     volumes:
-      - "./postgresql/data:/var/lib/postgresql/data"
+      - timescaledb-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
@@ -23,7 +23,7 @@ services:
       - '16379:6379'
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - "./redis/data:/data"
+      - redis-cache:/data
     networks:
       - asp-demo-net
   keycloak:
@@ -36,9 +36,13 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - "./keycloak/data:/opt/keycloak/data"
+      - keycloak-data:/opt/keycloak/data
     networks:
       - asp-demo-net
 
+volumes:
+  keycloak-data:
+  timescaledb-data:
+  redis-cache:
 networks:
   asp-demo-net:

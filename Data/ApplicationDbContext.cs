@@ -29,6 +29,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         {
             if (entityEntry.State == EntityState.Added)
                 ((AuditableEntity)entityEntry.Entity).CreateTime = DateTime.UtcNow;
+            else
+                entityEntry.Property("CreateTime").IsModified = false;
             ((AuditableEntity)entityEntry.Entity).UpdateTime = DateTime.UtcNow;
         }
     }
