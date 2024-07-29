@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using DbUp;
+﻿using EvolveDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using WebApiDemo.Data;
 using WebApiDemo.Services;
 
@@ -24,8 +24,8 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Run database migrations
-RunDatabaseMigrations(app.Services);
+// Run Evolve migrations
+RunEvolveMigrations(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -47,30 +47,33 @@ app.MapControllers();
 
 app.Run();
 
-void RunDatabaseMigrations(IServiceProvider serviceProvider)
+void RunEvolveMigrations(IServiceProvider serviceProvider)
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-    var upgrader =
-        DeployChanges.To
-            .PostgresqlDatabase(connectionString)
-            .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-            .JournalToPostgresqlTable("public", "schemaversions")
-            .LogToConsole()
-            .Build();
+    var evolveConfig = configuration.GetSection("Evolve").Get<EvolveConfig>();
 
-    var result = upgrader.PerformUpgrade();
-
-    if (!result.Successful)
+    try
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(result.Error);
-        Console.ResetColor();
-        throw new Exception("Database migration failed", result.Error);
-    }
+        using var connection = new NpgsqlConnection(connectionString);
+        var evolve = new Evolve(connection, msg => Console.WriteLine(msg))
+        {
+            Locations = evolveConfig.Locations,
+            Schemas = evolveConfig.Schemas
+        };
 
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine("Database migration succeeded!");
-    Console.ResetColor();
+        evolve.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Database migration failed: " + ex.Message);
+        throw;
+    }
+}
+
+public class EvolveConfig
+{
+    public string[] Locations { get; set; }
+    public string[] Schemas { get; set; }
 }

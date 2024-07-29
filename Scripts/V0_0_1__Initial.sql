@@ -23,10 +23,10 @@ SET
 row_security = off;
 
 --
--- Name: bms; Type: SCHEMA; Schema: -;
+-- Name: asp_demo; Type: SCHEMA; Schema: -;
 --
 
-CREATE SCHEMA IF NOT EXISTS public;
+CREATE SCHEMA IF NOT EXISTS asp_demo;
 
 
 SET
@@ -36,10 +36,10 @@ SET
 default_table_access_method = heap;
 
 --
--- Name: device_info; Type: TABLE; Schema: public;
+-- Name: device_info; Type: TABLE; Schema: asp_demo;
 --
 
-CREATE TABLE public.device_info
+CREATE TABLE asp_demo.device_info
 (
     id           VARCHAR(50) PRIMARY KEY,
     access_token VARCHAR(50)  NOT NULL,

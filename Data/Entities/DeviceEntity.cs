@@ -5,7 +5,7 @@ using WebApiDemo.Services.Dto;
 
 namespace WebApiDemo.Data.Entities;
 
-[Table("device_info", Schema = "public")]
+[Table("device_info", Schema = "asp_demo")]
 public class DeviceEntity : AuditableEntity
 {
     public DeviceEntity()
