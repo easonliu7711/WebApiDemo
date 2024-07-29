@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using WebApiDemo.Config;
 using WebApiDemo.Data;
 using WebApiDemo.Services;
 
@@ -53,27 +54,12 @@ void RunEvolveMigrations(IServiceProvider serviceProvider)
     var connectionString = configuration.GetConnectionString("DefaultConnection");
 
     var evolveConfig = configuration.GetSection("Evolve").Get<EvolveConfig>();
-
-    try
+    if (evolveConfig == null) return;
+    using var connection = new NpgsqlConnection(connectionString);
+    var evolve = new Evolve(connection, Console.WriteLine)
     {
-        using var connection = new NpgsqlConnection(connectionString);
-        var evolve = new Evolve(connection, msg => Console.WriteLine(msg))
-        {
-            Locations = evolveConfig.Locations,
-            Schemas = evolveConfig.Schemas
-        };
-
-        evolve.Migrate();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Database migration failed: " + ex.Message);
-        throw;
-    }
-}
-
-public class EvolveConfig
-{
-    public string[] Locations { get; set; }
-    public string[] Schemas { get; set; }
+        Locations = evolveConfig.Locations,
+        Schemas = evolveConfig.Schemas
+    };
+    evolve.Migrate();
 }
