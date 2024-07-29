@@ -6,9 +6,8 @@
   ```bash
   cd .\asp-demo-docker ; docker-compose up -d
   ```
-
+  
 ## 代辦事件
-
 - [x] 基礎專案架構
 - [x] 基礎專案配置
 - [x] 開發環境 Docker-Compose
