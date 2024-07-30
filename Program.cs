@@ -1,7 +1,6 @@
-﻿using EvolveDb;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
-using Npgsql;
 using WebApiDemo.Config;
 using WebApiDemo.Services;
 
@@ -25,7 +24,13 @@ builder.Services.AddSwaggerGen(c =>
 // Run Evolve migrations
 EvolveConfig.RunEvolveMigrations(builder.Configuration);
 
+// 添加健康檢查服務
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
+
+// 配置健康檢查端點
+app.MapHealthChecks("/healthz");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

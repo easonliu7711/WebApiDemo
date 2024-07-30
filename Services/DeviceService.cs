@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiDemo.Config;
-using WebApiDemo.Data;
 using WebApiDemo.Data.Entities;
 using WebApiDemo.Services.Dto;
 
