@@ -25,7 +25,9 @@ builder.Services.AddSwaggerGen(c =>
 EvolveConfig.RunEvolveMigrations(builder.Configuration);
 
 // 添加健康檢查服務
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException(), 
+        name: "DB Health Check");
 
 var app = builder.Build();
 

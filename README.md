@@ -17,6 +17,8 @@
 - [x] DB CreateTime & UpdateTime 自動添加
 - [x] 資料時區問題
 - [x] Swagger
+- [ ] Redis Cache機制
+- [ ] Local Cache機制
 - [ ] 數據加密
 - [ ] Validation
 - [ ] ExceptionHandler
