@@ -2,9 +2,14 @@
 
 #### 本機開發環境需搭配使用相關第三方服務，採用Docker方式安裝，依照下列程序安裝
 
-* 執行docker-compose啟動相關第三方服務
+* [ 本機有直接安裝docker ] 執行docker-compose啟動相關第三方服務
   ```bash
   cd .\asp-demo-docker ; docker-compose up -d
+  ```
+
+* [ 使用WSL安裝docker ] 執行docker-compose啟動相關第三方服務 ( 請先確認docker是否有啟動 )
+  ```bash
+   $path = wsl pwd ; $path = $path + "/asp-demo-docker/docker-compose.yml" ; wsl docker-compose -f $path up -d
   ```
 
 ## 代辦事件
