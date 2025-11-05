@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using WebApiDemo.Controllers.Requests;
-using WebApiDemo.Data.Entities;
+using WebApiDemo.Repositories.Entities;
 
 namespace WebApiDemo.Services.Dto;
 

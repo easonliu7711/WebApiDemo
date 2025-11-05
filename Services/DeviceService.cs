@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiDemo.Config;
-using WebApiDemo.Data.Entities;
+using WebApiDemo.Repositories.Entities;
 using WebApiDemo.Services.Dto;
+using WebApiDemo.Services.Interfaces;
 
 namespace WebApiDemo.Services;
 

@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Models;
 using WebApiDemo.Config;
 using WebApiDemo.Services;
+using WebApiDemo.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

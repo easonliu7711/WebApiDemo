@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace WebApiDemo.Data.Entities;
+namespace WebApiDemo.Repositories.Entities;
 
 public abstract class AuditableEntity
 {
