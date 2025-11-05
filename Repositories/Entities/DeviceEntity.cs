@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using WebApiDemo.Services.Dto;
 
-namespace WebApiDemo.Data.Entities;
+namespace WebApiDemo.Repositories.Entities;
 
 [Table("device_info", Schema = "asp_demo")]
 public class DeviceEntity : AuditableEntity

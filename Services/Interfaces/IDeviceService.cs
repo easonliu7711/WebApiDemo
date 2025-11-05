@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiDemo.Services.Dto;
 
-namespace WebApiDemo.Services;
+namespace WebApiDemo.Services.Interfaces;
 
 public interface IDeviceService
 {

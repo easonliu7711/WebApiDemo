@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApiDemo.Data.Entities;
+using WebApiDemo.Repositories.Entities;
 
 namespace WebApiDemo.Config;
 

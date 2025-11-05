@@ -1,7 +1,7 @@
 version: '3'
 services:
   timescaledb:
-    image: timescale/timescaledb-ha:pg14-latest
+    image: timescale/timescaledb-ha:pg18
     container_name: timescale
     restart: on-failure
     ports:
@@ -27,7 +27,7 @@ services:
     networks:
       - asp-demo-net
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: keycloak/keycloak:26.1.4
     container_name: keycloak
     environment:
       - KEYCLOAK_ADMIN=admin
